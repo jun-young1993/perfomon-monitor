@@ -1,6 +1,6 @@
 import physicalDisk from "./perfomon/physical-disk";
 
-export default class perfomon {
+class perfomon {
 	private physicalDisk?: physicalDisk;
 	constructor(){
 		this.physicalDisk = new physicalDisk();
@@ -8,3 +8,4 @@ export default class perfomon {
 	
 };
 
+export {physicalDisk, perfomon};

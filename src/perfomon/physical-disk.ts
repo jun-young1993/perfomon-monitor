@@ -1,16 +1,39 @@
 import Emitter from "./emitter";
+import Commander from "./commander";
 type physicalDiskCommand = "PhysicalDisk";
+
 export default class physicalDisk extends Emitter{
 	private command:physicalDiskCommand = "PhysicalDisk";
-	constructor(){
+	private commander?:Commander;
+	constructor(option:string[] = ['-si','2']){
 		// execSync("typeperf -qx PhysicalDisk").toString('utf-8')
 		super();
+		this.commander = new Commander(this.command,option);
 	}
-	// \PhysicalDisk(1 D:)\Current Disk Queue Length
-	// \PhysicalDisk(0 C:)\Current Disk Queue Length
-	// \PhysicalDisk(_Total)\Current Disk Queue Length
-	currentDiskQueueLength(){
 
+	
+	/**
+	 * Current Disk Queue Length
+	 * ex) \PhysicalDisk(0 C:)\Current Disk Queue Length
+	 *
+	 * @param {string} [drive="_Total"]
+	 * @param {string} [eventName]
+	 * @memberof physicalDisk
+	 */
+	public currentDiskQueueLength(drive:string = "_Total",eventName?:string){
+		const command:string = 'Current Disk Queue Length';
+		this.commander?.start(command,{
+			select: (cli:string) => {
+				return cli.includes(drive);
+			}
+		});
+
+		this.commander?.on(command,(data) => {
+			super.emit(eventName??command, {
+				data : data.data,
+				drive : drive
+			})
+		})
 	}
 }
 

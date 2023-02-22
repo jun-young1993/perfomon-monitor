@@ -33,6 +33,7 @@ var physicalDisk = /** @class */ (function (_super) {
      * ex) \PhysicalDisk(0 C:)\Current Disk Queue Length
      *
      * @param {string} [drive="_Total"]
+     * @param {string} [eventName]
      * @memberof physicalDisk
      */
     physicalDisk.prototype.currentDiskQueueLength = function (drive, eventName) {

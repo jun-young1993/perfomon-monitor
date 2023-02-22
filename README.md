@@ -3,7 +3,7 @@
 
 ## Physical Disk
 ```js
-	const {physicalDisk} = require("../src/index");
+	import {physicalDisk} from "../src/index";
 	const physical_disk = new physicalDisk();
 
 	/**

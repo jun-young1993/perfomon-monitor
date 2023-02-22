@@ -137,11 +137,9 @@ var Commander = /** @class */ (function (_super) {
      * @memberof Commander
      */
     Commander.prototype.kill = function (counterName) {
-        console.log(this.processes);
         if (this.processes[counterName]) {
             this.processes[counterName].kill();
             delete this.processes[counterName];
-            console.log(this.processes);
             return true;
         }
         return false;

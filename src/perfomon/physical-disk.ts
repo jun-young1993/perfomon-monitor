@@ -12,6 +12,7 @@ export default class physicalDisk extends Emitter{
 	}
 
 	
+	
 	/**
 	 * Current Disk Queue Length
 	 * ex) \PhysicalDisk(0 C:)\Current Disk Queue Length
@@ -22,6 +23,52 @@ export default class physicalDisk extends Emitter{
 	 */
 	public currentDiskQueueLength(drive:string = "_Total",eventName?:string){
 		const command:string = 'Current Disk Queue Length';
+		this.commander?.start(command,{
+			select: (cli:string) => {
+				return cli.includes(drive);
+			}
+		});
+
+		this.commander?.on(command,(data) => {
+			super.emit(eventName??command, {
+				data : data.data,
+				drive : drive
+			})
+		})
+	}
+
+	/**
+	 * \PhysicalDisk(1 D:)\Avg. Disk Write Queue Length
+	 *
+	 * @param {string} [drive="_Total"]
+	 * @param {string} [eventName]
+	 * @memberof physicalDisk
+	 */
+	public AvgDiskWriteQueueLength(drive:string = "_Total",eventName?:string){
+		const command:string = 'Avg. Disk Write Queue Length';
+		this.commander?.start(command,{
+			select: (cli:string) => {
+				return cli.includes(drive);
+			}
+		});
+
+		this.commander?.on(command,(data) => {
+			super.emit(eventName??command, {
+				data : data.data,
+				drive : drive
+			})
+		})
+	}
+
+	/**
+	 * \PhysicalDisk(1 D:)\Avg. Disk Read Queue Length
+	 *
+	 * @param {string} [drive="_Total"]
+	 * @param {string} [eventName]
+	 * @memberof physicalDisk
+	 */
+	public AvgDiskReadQueueLength(drive:string = "_Total",eventName?:string){
+		const command:string = 'Avg. Disk Read Queue Length';
 		this.commander?.start(command,{
 			select: (cli:string) => {
 				return cli.includes(drive);
@@ -58,15 +105,11 @@ export default class physicalDisk extends Emitter{
 // \PhysicalDisk(1 D:)\% Disk Read Time
 // \PhysicalDisk(0 C:)\% Disk Read Time
 // \PhysicalDisk(_Total)\% Disk Read Time
-// \PhysicalDisk(1 D:)\Avg. Disk Read Queue Length
-// \PhysicalDisk(0 C:)\Avg. Disk Read Queue Length
-// \PhysicalDisk(_Total)\Avg. Disk Read Queue Length
+
 // \PhysicalDisk(1 D:)\% Disk Write Time
 // \PhysicalDisk(0 C:)\% Disk Write Time
 // \PhysicalDisk(_Total)\% Disk Write Time
-// \PhysicalDisk(1 D:)\Avg. Disk Write Queue Length
-// \PhysicalDisk(0 C:)\Avg. Disk Write Queue Length
-// \PhysicalDisk(_Total)\Avg. Disk Write Queue Length
+
 // \PhysicalDisk(1 D:)\Avg. Disk sec/Transfer
 // \PhysicalDisk(0 C:)\Avg. Disk sec/Transfer
 // \PhysicalDisk(_Total)\Avg. Disk sec/Transfer

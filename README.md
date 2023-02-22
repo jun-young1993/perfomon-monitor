@@ -32,6 +32,7 @@ $ npm i perfomon-monitor
 			...
 		*/
 	})
+	
 	setTimeout(()=>{
 		/**
 		 *
@@ -42,5 +43,18 @@ $ npm i perfomon-monitor
 		 */
 		physical_disk.kill("Current Disk Queue Length")
 	},10000)
+
+	/////////////////
+	/////METHODS/////
+	/////////////////
+
+	physical_disk.AvgDiskWriteQueueLength(diskName,counterName);
+	physical_disk.on(counterName,(data) => {
+		console.log(counterName,data); // { data: '6.000000', drive: 'D:' }
+	})
+	physical_disk.AvgDiskWriteQueueLength(diskName,counterName);
+	physical_disk.on(counterName,(data) => {
+		console.log(counterName,data); //{ data: '5.000000', drive: 'D:' }
+	})
 
 ```

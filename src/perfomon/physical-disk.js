@@ -54,7 +54,55 @@ var physicalDisk = /** @class */ (function (_super) {
         });
     };
     /**
+     * \PhysicalDisk(1 D:)\Avg. Disk Write Queue Length
      *
+     * @param {string} [drive="_Total"]
+     * @param {string} [eventName]
+     * @memberof physicalDisk
+     */
+    physicalDisk.prototype.AvgDiskWriteQueueLength = function (drive, eventName) {
+        var _this = this;
+        var _a, _b;
+        if (drive === void 0) { drive = "_Total"; }
+        var command = 'Avg. Disk Write Queue Length';
+        (_a = this.commander) === null || _a === void 0 ? void 0 : _a.start(command, {
+            select: function (cli) {
+                return cli.includes(drive);
+            }
+        });
+        (_b = this.commander) === null || _b === void 0 ? void 0 : _b.on(command, function (data) {
+            _super.prototype.emit.call(_this, eventName !== null && eventName !== void 0 ? eventName : command, {
+                data: data.data,
+                drive: drive
+            });
+        });
+    };
+    /**
+     * \PhysicalDisk(1 D:)\Avg. Disk Read Queue Length
+     *
+     * @param {string} [drive="_Total"]
+     * @param {string} [eventName]
+     * @memberof physicalDisk
+     */
+    physicalDisk.prototype.AvgDiskReadQueueLength = function (drive, eventName) {
+        var _this = this;
+        var _a, _b;
+        if (drive === void 0) { drive = "_Total"; }
+        var command = 'Avg. Disk Read Queue Length';
+        (_a = this.commander) === null || _a === void 0 ? void 0 : _a.start(command, {
+            select: function (cli) {
+                return cli.includes(drive);
+            }
+        });
+        (_b = this.commander) === null || _b === void 0 ? void 0 : _b.on(command, function (data) {
+            _super.prototype.emit.call(_this, eventName !== null && eventName !== void 0 ? eventName : command, {
+                data: data.data,
+                drive: drive
+            });
+        });
+    };
+    /**
+     * command process kill
      *
      * @param {string} counterName
      * @returns {Boolean}
@@ -82,9 +130,6 @@ exports["default"] = physicalDisk;
 // \PhysicalDisk(1 D:)\% Disk Write Time
 // \PhysicalDisk(0 C:)\% Disk Write Time
 // \PhysicalDisk(_Total)\% Disk Write Time
-// \PhysicalDisk(1 D:)\Avg. Disk Write Queue Length
-// \PhysicalDisk(0 C:)\Avg. Disk Write Queue Length
-// \PhysicalDisk(_Total)\Avg. Disk Write Queue Length
 // \PhysicalDisk(1 D:)\Avg. Disk sec/Transfer
 // \PhysicalDisk(0 C:)\Avg. Disk sec/Transfer
 // \PhysicalDisk(_Total)\Avg. Disk sec/Transfer

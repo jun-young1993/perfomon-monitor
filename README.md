@@ -48,10 +48,13 @@ $ npm i perfomon-monitor
 	/////METHODS/////
 	/////////////////
 
+	const counterName:string = 'Avg. Disk Read Queue Length';
 	physical_disk.AvgDiskWriteQueueLength(diskName,counterName);
 	physical_disk.on(counterName,(data) => {
 		console.log(counterName,data); // { data: '6.000000', drive: 'D:' }
 	})
+
+	const counterName:string = 'Avg. Disk Write Queue Length';
 	physical_disk.AvgDiskWriteQueueLength(diskName,counterName);
 	physical_disk.on(counterName,(data) => {
 		console.log(counterName,data); //{ data: '5.000000', drive: 'D:' }

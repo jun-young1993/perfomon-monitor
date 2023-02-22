@@ -129,11 +129,11 @@ export default class Commander extends Emitter{
 	 * @memberof Commander
 	 */
 	public kill(counterName:string){
-		console.log(this.processes);
+		
 		if(this.processes[counterName]){
 			this.processes[counterName].kill();
 			delete this.processes[counterName];
-			console.log(this.processes);
+			
 			return true;
 		}
 		

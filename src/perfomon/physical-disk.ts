@@ -37,7 +37,7 @@ export default class physicalDisk extends Emitter{
 	}
 
 	/**
-	 *
+	 * command process kill
 	 *
 	 * @param {string} counterName
 	 * @returns {Boolean}

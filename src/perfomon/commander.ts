@@ -1,9 +1,10 @@
-import {spawn} from 'child_process';
+import {ChildProcessWithoutNullStreams, spawn} from 'child_process';
 import Emitter from './emitter';
 export default class Commander extends Emitter{
 	private command?:string;
 	private commands:string[] = [];
 	private option:string[] = [];
+	private processes:{[key:string] : ChildProcessWithoutNullStreams } = {}
 	constructor(command:string,option:string[] = []){
 		super();
 		this.command = command;
@@ -54,9 +55,9 @@ export default class Commander extends Emitter{
 		}
 	}
 
-	public run(cli:string[],command:string) {
-		const process = spawn("typeperf",cli.concat(this.option));
-		
+	public run(cli:string,command:string) {
+		const process = spawn("typeperf",[cli].concat(this.option));
+		this.processes[command] = process;
 		// process.stdin.end();
 		process.stdout.on('data',(data) => {
 			const output = data.toString('utf8');
@@ -76,7 +77,8 @@ export default class Commander extends Emitter{
 						data : value,
 						cli : cli,
 						option : this.option,
-						original : output
+						original : output,
+						process : process
 					});
 				}
 				
@@ -108,7 +110,7 @@ export default class Commander extends Emitter{
 				if(options?.select && !options.select(cli)){
 					return false;
 				}
-				this.run([cli],command);
+				this.run(cli,command);
 				
 			})
 			
@@ -119,5 +121,23 @@ export default class Commander extends Emitter{
 		return super.on(command, fn);
 	}
 
+	/**
+	 *
+	 *
+	 * @param {string} counterName
+	 * @returns {Boolean}
+	 * @memberof Commander
+	 */
+	public kill(counterName:string){
+		console.log(this.processes);
+		if(this.processes[counterName]){
+			this.processes[counterName].kill();
+			delete this.processes[counterName];
+			console.log(this.processes);
+			return true;
+		}
+		
+		return false;
+	}
 
 }

@@ -32,6 +32,15 @@ $ npm i perfomon-monitor
 			...
 		*/
 	})
-
+	setTimeout(()=>{
+		/**
+		 *
+		 *
+		 * @param {string} counterName
+		 * @returns {Boolean}
+		 * @memberof physicalDisk
+		 */
+		physical_disk.kill("Current Disk Queue Length")
+	},10000)
 
 ```

@@ -53,6 +53,17 @@ var physicalDisk = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     *
+     *
+     * @param {string} counterName
+     * @returns {Boolean}
+     * @memberof physicalDisk
+     */
+    physicalDisk.prototype.kill = function (counterName) {
+        var _a;
+        return (_a = this.commander) === null || _a === void 0 ? void 0 : _a.kill(counterName);
+    };
     return physicalDisk;
 }(emitter_1["default"]));
 exports["default"] = physicalDisk;

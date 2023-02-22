@@ -35,6 +35,17 @@ export default class physicalDisk extends Emitter{
 			})
 		})
 	}
+
+	/**
+	 *
+	 *
+	 * @param {string} counterName
+	 * @returns {Boolean}
+	 * @memberof physicalDisk
+	 */
+	public kill(counterName:string){
+		return this.commander?.kill(counterName);
+	}
 }
 
 

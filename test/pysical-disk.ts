@@ -8,9 +8,10 @@
 import {physicalDisk} from "../src/index";
 const physical_disk = new physicalDisk();
 
-
-physical_disk.currentDiskQueueLength("D:","Current Disk Queue Length");
-physical_disk.on("Current Disk Queue Length",(data) => {
+const counterName:string = "Current Disk Queue Length";
+const diskName:string = "D:";
+physical_disk.currentDiskQueueLength(diskName,counterName);
+physical_disk.on(counterName,(data) => {
 	console.log(data);
 	/*
 		data 
@@ -21,3 +22,13 @@ physical_disk.on("Current Disk Queue Length",(data) => {
 		...
 	*/
 })
+setTimeout(()=>{
+	/**
+	 *
+	 *
+	 * @param {string} counterName
+	 * @returns {Boolean}
+	 * @memberof physicalDisk
+	 */
+	physical_disk.kill("Current Disk Queue Length")
+},10000)

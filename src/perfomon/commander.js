@@ -24,6 +24,7 @@ var Commander = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         _this.commands = [];
         _this.option = [];
+        _this.processes = {};
         _this.command = command;
         _this.option = option;
         return _this;
@@ -74,7 +75,8 @@ var Commander = /** @class */ (function (_super) {
     };
     Commander.prototype.run = function (cli, command) {
         var _this = this;
-        var process = (0, child_process_1.spawn)("typeperf", cli.concat(this.option));
+        var process = (0, child_process_1.spawn)("typeperf", [cli].concat(this.option));
+        this.processes[command] = process;
         // process.stdin.end();
         process.stdout.on('data', function (data) {
             var _a;
@@ -93,7 +95,8 @@ var Commander = /** @class */ (function (_super) {
                         data: value,
                         cli: cli,
                         option: _this.option,
-                        original: output
+                        original: output,
+                        process: process
                     });
                 }
             }
@@ -119,12 +122,29 @@ var Commander = /** @class */ (function (_super) {
                 if ((options === null || options === void 0 ? void 0 : options.select) && !options.select(cli)) {
                     return false;
                 }
-                _this.run([cli], command);
+                _this.run(cli, command);
             });
         });
     };
     Commander.prototype.on = function (command, fn) {
         return _super.prototype.on.call(this, command, fn);
+    };
+    /**
+     *
+     *
+     * @param {string} counterName
+     * @returns {Boolean}
+     * @memberof Commander
+     */
+    Commander.prototype.kill = function (counterName) {
+        console.log(this.processes);
+        if (this.processes[counterName]) {
+            this.processes[counterName].kill();
+            delete this.processes[counterName];
+            console.log(this.processes);
+            return true;
+        }
+        return false;
     };
     return Commander;
 }(emitter_1["default"]));

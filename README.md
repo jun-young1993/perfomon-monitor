@@ -1,7 +1,13 @@
 # perfomon-monitor
 
+### ※ Currently only available in Windows  
+#  
 
-## Physical Disk
+### Using npm:
+```shell
+$ npm i perfomon-monitor
+```
+### Physical Disk:
 ```js
 	import {physicalDisk} from "../src/index";
 	const physical_disk = new physicalDisk();

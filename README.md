@@ -13,12 +13,21 @@ $ npm i perfomon-monitor
 	const physical_disk = new physicalDisk();
 
 	/**
+	 * @windows
+	 * 
+	 * 
+	 * 
 	 * Current Disk Queue Length
 	 * ex) \PhysicalDisk(0 C:)\Current Disk Queue Length
 	 *
+	 * 
+	 * 
 	 * @param {string} [drive="_Total"]
 	 * @param {string} [eventName]
 	 * @memberof physicalDisk
+	 * 
+	 * 
+	 * 
 	 */
 	physical_disk.currentDiskQueueLength("D:","Current Disk Queue Length");
 	physical_disk.on("Current Disk Queue Length",(data) => {
@@ -35,7 +44,7 @@ $ npm i perfomon-monitor
 	
 	setTimeout(()=>{
 		/**
-		 *
+		 * @windows
 		 *
 		 * @param {string} counterName
 		 * @returns {Boolean}
@@ -48,12 +57,20 @@ $ npm i perfomon-monitor
 	/////METHODS/////
 	/////////////////
 
+	
+	
+	/**
+	 * @windows
+	 */
 	const counterName:string = 'Avg. Disk Read Queue Length';
 	physical_disk.AvgDiskWriteQueueLength(diskName,counterName);
 	physical_disk.on(counterName,(data) => {
 		console.log(counterName,data); // { data: '6.000000', drive: 'D:' }
 	})
 
+	/**
+	 * @windows
+	 */
 	const counterName:string = 'Avg. Disk Write Queue Length';
 	physical_disk.AvgDiskWriteQueueLength(diskName,counterName);
 	physical_disk.on(counterName,(data) => {
